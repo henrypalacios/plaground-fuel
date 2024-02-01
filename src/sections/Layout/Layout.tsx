@@ -1,6 +1,7 @@
 import { ErrorBoundary } from "../ErrorBoundary";
 import styles from "./Layout.module.scss";
 import { PropsWithChildren } from "react";
+import { WalletConnectButton } from "./WalletConnectButton";
 
 export function Layout({children}: PropsWithChildren) {
 	return (
@@ -13,6 +14,9 @@ export function Layout({children}: PropsWithChildren) {
 						</a>
 					</div>
 
+					<div className={styles.wallet__container}>
+						<WalletConnectButton />
+					</div>
 				</section>
 			</header>
 			<ErrorBoundary >
