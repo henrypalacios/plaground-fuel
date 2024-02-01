@@ -1,12 +1,12 @@
 import { FlexBox } from '@/sections/common/FlexBox';
 import { BadgeWalletInfo } from '../BadgeWalletInfo';
 import styles from './WalletConnectButton.module.scss';
-import { useNetworkConnection } from '@/context/NetworkConnectionContext';
+import { useNetworkConnection } from '@/context/useNetworkConnection';
 
 export const WalletConnectButton = () => {
-  const { isConnected, connectWallet, isLoading, accountConnected, disconnectWallet } = useNetworkConnection();
+  const { wallet, connectWallet, isLoading, accountConnected, disconnectWallet } = useNetworkConnection();
 
-  if (isConnected) {
+  if (wallet) {
     return (
       <FlexBox>
       {accountConnected && 
