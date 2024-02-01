@@ -1,0 +1,35 @@
+@import "@/assets/styles/sakura.scss";
+
+:root {
+    --header-height: 6.25rem;
+  }
+  
+  .header {
+    height: var(--header-height);
+    background-color: $color-bg;
+  
+    &__container {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+  
+      .brand__container {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+  
+      & a {
+        text-decoration: none;
+      }
+    }
+  
+    .app__brand {
+      color: $color-blossom;
+      font-style: italic;
+    }
+  }
