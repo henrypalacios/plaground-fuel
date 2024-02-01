@@ -9,7 +9,7 @@ export function Layout({children}: PropsWithChildren) {
 			<header className={styles.header}>
 				<section className={styles.header__container}>
 					<div className={styles.brand__container}>
-						<a href="http://localhost:5173">
+						<a href="#">
                             Playground Fuel
 						</a>
 					</div>
