@@ -1,5 +1,7 @@
 import React, { createContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import {FuelWalletLocked} from "@fuel-wallet/sdk"
+import { FuelProvider } from '@fuel-wallet/react';
+import { IS_DEVELOPMENT } from '@/constant';
 
 type NetworkConnectionError = 'FAILED_TO_CONNECT' | 'WALLET_NOT_DETECTED' | 'ACCOUNTS_NOT_FOUND'
 
@@ -88,9 +90,15 @@ export const NetworkConnectionProvider: React.FC<NetworkConnectionProviderProps>
   };
 
   return (
-    <NetworkConnectionContext.Provider value={{ wallet, accounts, accountConnected, isLoading, error, connectWallet, disconnectWallet }}>
-      {children}
-    </NetworkConnectionContext.Provider>
+    <FuelProvider 
+    fuelConfig={{
+        devMode: IS_DEVELOPMENT,
+      }}
+    >
+      <NetworkConnectionContext.Provider value={{ wallet, accounts, accountConnected, isLoading, error, connectWallet, disconnectWallet }}>
+        {children}
+      </NetworkConnectionContext.Provider>
+    </FuelProvider>
   );
 };
 
