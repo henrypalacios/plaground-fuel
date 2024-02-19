@@ -1,0 +1,1 @@
+export const multisigContractId = "0xa6ce0991bc31db4b1ce725bbcc11ca72bfd205b3befb0f92b1c3eb79d8f66889"

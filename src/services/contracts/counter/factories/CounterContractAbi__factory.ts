@@ -11,7 +11,7 @@
 
 import { Interface, Contract, ContractFactory } from "fuels";
 import type { Provider, Account, AbstractAddress, BytesLike, DeployContractOptions } from "fuels";
-import type { CounterContractAbi, CounterContractAbiInterface } from "../CounterContractAbi";
+import type { CounterContractAbi, CounterContractAbiInterface } from "../../CounterContractAbi";
 
 const _abi = {
   "types": [

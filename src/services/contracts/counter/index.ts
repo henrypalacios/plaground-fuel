@@ -11,4 +11,4 @@
 
 export type { CounterContractAbi } from './CounterContractAbi';
 
-export { CounterContractAbi__factory } from './factories/CounterContractAbi__factory';
+export { CounterContractAbi__factory } from './counter/factories/CounterContractAbi__factory';
