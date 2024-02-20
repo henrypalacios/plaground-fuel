@@ -1,1 +1,3 @@
+export const counterContractId = "0xd03eae658a51cd7be9aedd60276a2a4c4a5c2820739b97d81146df6d6bdb6a26"
+
 export const multisigContractId = "0xa6ce0991bc31db4b1ce725bbcc11ca72bfd205b3befb0f92b1c3eb79d8f66889"

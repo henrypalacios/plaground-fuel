@@ -10,7 +10,7 @@ export function Layout({children}: PropsWithChildren) {
 				<section className={styles.header__container}>
 					<div className={styles.brand__container}>
 						<a href="#">
-                            Playground Fuel
+							Multisig Playground
 						</a>
 					</div>
 

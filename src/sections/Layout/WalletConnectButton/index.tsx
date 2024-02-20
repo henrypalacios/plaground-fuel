@@ -1,34 +1,23 @@
 import { FlexBox } from '@/sections/common/FlexBox';
 import { BadgeWalletInfo } from '../BadgeWalletInfo';
-import styles from './WalletConnectButton.module.scss';
-import { useNetworkConnection } from '@/context/useNetworkConnection';
+import { useNetworkConnection } from '@/context/NetworkConnectionConfig/useNetworkConnection';
+import LoadingButton from '@/sections/common/LoadingButton';
 
 export const WalletConnectButton = () => {
   const { wallet, connectWallet, isLoading, accountConnected, disconnectWallet } = useNetworkConnection();
 
-  if (wallet) {
-    return (
-      <FlexBox>
-      {accountConnected && 
-        <BadgeWalletInfo isConnecting={isLoading} address={accountConnected} />}
-      <button
-        className={`${styles.walletConnect__button} ${styles['walletConnect__button--disconnect']}`}
-        onClick={() => disconnectWallet()}
-      >
-        Disconnect
-      </button>
-      </FlexBox>
-    );
-  }
+  const buttonProps = wallet ? { variant:`danger`, onClick:() => disconnectWallet() }:
+            {onClick: () => connectWallet()}      
+
 
   return (
-    <div className={styles.walletConnect__container}>
-      <button
-        className={styles.walletConnect__button}
-        onClick={() => connectWallet()}
-      >
-        Connect to wallet
-      </button>
-    </div>
+      <FlexBox>
+        <>
+          {accountConnected &&  <BadgeWalletInfo isConnecting={isLoading} address={accountConnected} />}
+          <LoadingButton isLoading={isLoading} {...buttonProps}>
+            {wallet ? `Disconnect` : `Connect to wallet`}
+          </LoadingButton>
+        </>
+      </FlexBox>
   );
 };

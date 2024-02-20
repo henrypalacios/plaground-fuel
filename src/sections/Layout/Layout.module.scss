@@ -4,6 +4,10 @@
     --header-height: 6.25rem;
   }
   
+  body {
+    padding: 0;
+  }
+  
   .header {
     height: var(--header-height);
     background-color: $color-bg;

@@ -1,16 +1,16 @@
-import { NetworkConnectionProvider } from "./context/NetworkConnectionContext";
+import { NetworkConnectionConfig } from "./context/NetworkConnectionConfig";
 import { Dashboard } from "./sections/Dashboard";
 import { Layout } from "./sections/Layout/Layout";
 
 export function App() {
 
   return (
-    <NetworkConnectionProvider>
+    <NetworkConnectionConfig>
       <Layout >
-        <h3>Playground fuel</h3>
+        <h3>Multisig Playground</h3>
         <Dashboard />
       </Layout>
-    </NetworkConnectionProvider>
+    </NetworkConnectionConfig>
   )
 }
 

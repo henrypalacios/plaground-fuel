@@ -1,10 +1,10 @@
-import { useNetworkConnection } from "@/context/useNetworkConnection";
-import { useGetContract } from "@/hooks/useGetContract";
+import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
+import { useGetCounterContract } from "@/hooks/useGetCounterContract";
 import { useCallback, useEffect, useState } from "react";
 
 
 export function Dashboard() {
-   const {contract} = useGetContract()
+   const {contract} = useGetCounterContract()
    const {wallet} = useNetworkConnection()
    const [counter, setCounter] = useState(0)
    
