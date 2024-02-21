@@ -9,6 +9,6 @@
   Fuel-Core version: 0.22.0
 */
 
-export type { FuelMultisigAbi } from './FuelMultisigAbi';
+export type { CounterContractAbi } from './CounterContractAbi';
 
-export { FuelMultisigAbi__factory } from './factories/FuelMultisigAbi__factory';
+export { CounterContractAbi__factory } from './factories/CounterContractAbi__factory';

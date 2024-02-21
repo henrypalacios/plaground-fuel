@@ -1,6 +1,6 @@
-import React, { createContext, useState, ReactNode, useCallback, useEffect } from 'react';
+import React, { createContext, useState, ReactNode, useCallback } from 'react';
 import {FuelWalletLocked} from "@fuel-wallet/sdk"
-import { useDisconnect, useIsConnected, useWallet, useAccount, useConnectUI, useConnect, useConnectors, useChain } from '@fuel-wallet/react';
+import { useDisconnect, useIsConnected, useWallet, useAccount, useConnectUI } from '@fuel-wallet/react';
 
 type NetworkConnectionError = 'FAILED_TO_CONNECT' | 'WALLET_NOT_DETECTED' | 'ACCOUNTS_NOT_FOUND'
 

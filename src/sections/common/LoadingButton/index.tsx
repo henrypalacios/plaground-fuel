@@ -4,10 +4,10 @@ import { classNames } from '@/utils/classNames';
 
 export interface LoadingButtonProps  extends ButtonHTMLAttributes<HTMLButtonElement & PropsWithChildren>{
     isLoading?: boolean;
-    variant?: 'string'
+    variant?: string
 }
 
-function LoadingButton({ isLoading = false, children, onClick, variant = undefined, ...props }: Props) {
+function LoadingButton({ isLoading = false, children, onClick, variant = undefined, ...props }: LoadingButtonProps) {
   return (
     <div className={styles["walletConnect__container"]}>
       <button
