@@ -1,17 +1,20 @@
+import { AssetInfo } from "@/constant/assetsMap";
 import { BN } from "fuels";
 
 interface Options {
-    decimals?: number;
+  significantFigures?: number;
+  assetInfo?: AssetInfo
 }
 
-// convert decimal to planck unit e.g. 1.0000  to 1000000000000
-export const planckToDecimal = (
+// convert decimal to irregular unit e.g. 1.0000  to 1000000000000
+export const irregularToDecimal = (
     amount: undefined | string | number | number[] | BN | Uint8Array | Buffer,
     options: Options
   ): number | undefined => {
+    const {assetInfo} = options
     const decimals =
-      options.decimals !== undefined
-        ? options.decimals
+      assetInfo?.assetDecimals !== undefined
+        ? assetInfo.assetDecimals
         : 0;
   
     if (!decimals || !amount) return;
@@ -25,18 +28,14 @@ export const planckToDecimal = (
     );
   };
   
-interface planckToDecimalOptions {
-    significantFigures?: number;
-    symbol?: string;
-}
-  
 
-// convert planck unit to decimal with token name (ETH)  e.g. 100000000000 to 1.0000 ETH
-export const planckToDecimalFormatted = (
+// convert irregular unit to decimal with token name (ETH)  e.g. 100000000000 to 1.0000 ETH
+export const irregularToDecimalFormatted = (
     amount: undefined | string | number | number[] | BN | Uint8Array | Buffer,
-    options: planckToDecimalOptions & Options
+    options: Options
   ): string | undefined => {
-    const decimalAmount = planckToDecimal(amount, options);
+    const {assetInfo} = options
+    const decimalAmount = irregularToDecimal(amount, options);
     if (decimalAmount === undefined) return;
   
     const formattedVal =
@@ -44,20 +43,20 @@ export const planckToDecimalFormatted = (
         ? decimalAmount.toString()
         : decimalAmount.toFixed(options?.significantFigures).toString();
   
-    const symbol = options?.symbol
-      ? options.symbol
+    const symbol = assetInfo?.assetSymbol
+      ? assetInfo.assetSymbol
       : "";
   
     return `${formattedVal} ${symbol}`;
   };
   
 
-// convert decimal to planck unit e.g. 1.0000  to 1000000000000
-export const decimalToPlanck = (
+// convert decimal to irregular unit e.g. 1.0000  to 1000000000000
+export const decimalToIrregular = (
     amount: number,
     options: Options | undefined
   ): bigint | undefined => {
-    const decimals = options?.decimals || 0;
+    const decimals = options?.assetInfo?.assetDecimals || 0;
     if (!decimals) return;
   
     const convertedValue = BigInt(amount * 10 ** decimals);

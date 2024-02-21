@@ -22,22 +22,13 @@ interface NetworkConnectionProviderProps {
 }
 
 export const NetworkConnectionProvider: React.FC<NetworkConnectionProviderProps> = ({ children }) => {
-  // const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<NetworkConnectionContextType['error']>();
   const [accounts, setAccounts] = useState<NetworkConnectionContextType['accounts']>([]);
-  // const [accountConnected, setAccountConnected] = useState<NetworkConnectionContextType['accountConnected']>();
-  // const [wallet, setWallet] = useState<NetworkConnectionContextType['wallet']>();
   const { wallet, isLoading } = useWallet();
   const { isConnected } = useIsConnected();
   const {account} = useAccount()
   const { disconnect } = useDisconnect();
   const { connect, isConnecting } = useConnectUI();
-  // const { connectors } = useConnectors();
-  const info = useChain()
-  
-  console.log('__info', info)
-  
-
   
   const connectWallet = useCallback(async () => {
       try {

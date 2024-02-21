@@ -12,12 +12,10 @@ export const WalletConnectButton = () => {
 
   return (
       <FlexBox>
-        <>
-          {accountConnected &&  <BadgeWalletInfo isConnecting={isLoading} address={accountConnected} />}
-          <LoadingButton isLoading={isLoading} {...buttonProps}>
-            {wallet ? `Disconnect` : `Connect to wallet`}
-          </LoadingButton>
-        </>
+        {accountConnected &&  <BadgeWalletInfo isConnecting={isLoading} address={accountConnected} />}
+        <LoadingButton isLoading={isLoading} {...buttonProps}>
+          {wallet ? `Disconnect` : `Connect to wallet`}
+        </LoadingButton>
       </FlexBox>
   );
 };
