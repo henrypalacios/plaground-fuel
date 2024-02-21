@@ -11,10 +11,11 @@ interface UseGetBalanceReturn {
     assetInfo: AssetInfo
     formatted: string | undefined
     isLoading: boolean
+    addressToRequest?: string | undefined
 }
     
 
-export function useGetBalance(props?: AssetInfo ): UseGetBalanceReturn  {
+export function useGetBalance(props?: AssetInfo): UseGetBalanceReturn  {
     const assetInfo = useMemo(() => 
         props?.assetId ? {...props} : assetsMap[BASE_ASSET_ID], [props])
     const {accountConnected, isLoading} = useNetworkConnection()

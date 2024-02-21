@@ -1,17 +1,17 @@
 import styles from './BadgeWalletInfo.module.scss';
 import { getTruncatedAddress } from '@/utils/blockchain';
-import { useGetBalance } from '@/hooks/useGetBalance';
 
 interface BadgeWalletInfoProps {
-  isConnecting: boolean;
-  balanceData?: { value: number; symbol: string };
+  isLoading: boolean;
+  balanceData?: string | undefined;
   address: string;
 }
 
 export const BadgeWalletInfo: React.FC<BadgeWalletInfoProps> = ({
   address,
+  balanceData,
+  isLoading
 }) => {
-  const {formatted, isLoading} = useGetBalance()
 
   return (
     <div className={styles.badgeOval}>
@@ -21,7 +21,7 @@ export const BadgeWalletInfo: React.FC<BadgeWalletInfoProps> = ({
             <div className={styles.progress}></div>
           ) : (
             <span className={styles.text}>
-            {formatted || '-'}
+            {balanceData || '-'}
             </span>
           )}
         </div>

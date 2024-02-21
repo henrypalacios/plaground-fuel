@@ -1,72 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
 import { useGetCounterContract } from "@/hooks/useGetCounterContract";
+import { FlexBox } from "../common/FlexBox";
+import LoadingButton from "../common/LoadingButton";
+import { useDeployMultisigContract } from "@/hooks/useMultisigContract";
+import { FuelMultisigAbi } from "@/services/contracts/multisig";
+import { NewMultisig } from "../NewMultisig";
+import { InteractionMultisig } from "../InteractionMultisig";
 
 
 export function Dashboard() {
-   const {contract} = useGetCounterContract()
-   const {wallet, accountConnected} = useNetworkConnection()
-   const [counter, setCounter] = useState(0)
+   const {wallet} = useNetworkConnection()
+   const [contractDeployed, setContractDeployed] = useState<string | undefined>()
    
-  const getCount = useCallback(async () => {
-    if (!contract) return
+   if (!wallet) return
 
-    try{
-      const { value } = await contract.functions
-      .count()
-      .txParams({
-        gasPrice: 1,
-        gasLimit: 100_000,
-      })
-      .simulate();
-      setCounter(value.toNumber());
-    } catch(error) {
-      console.error(error);
-    }
-  }, [contract])
-
-  const onIncrementPressed = async () => {
-    if (!contract) {
-      return alert("Contract not loaded");
-    }
-    try {
-      await contract.functions
-      .increment()
-      .txParams({
-        gasPrice: 1,
-        gasLimit: 100_000,
-      })
-      .call();
-      await getCount();
-    } catch(error) {
-      console.error(error);
-    }
-  };
-
-
-  useEffect(() => {
-    if (!contract) return
-
-    async function getInitialCount(){
-      if(accountConnected && wallet){
-        await getCount();
-        // setContract(counterContract);
-      }
-    }
-    
-    getInitialCount();
-  }, [accountConnected, contract, getCount, wallet]);
-
-
-   if (!contract || !wallet) return
-   
    return (
-
-            <>
-              <h3>Counter: {counter}</h3>
-              <button onClick={onIncrementPressed}>
-               Increment
-               </button>
-            </>
+    <FlexBox pt="lg">
+      {!contractDeployed ? 
+        (<NewMultisig setContract={setContractDeployed}/>)
+      :
+        (<InteractionMultisig contractId={contractDeployed}/>)
+      }
+    </FlexBox>
    ) 
 }
