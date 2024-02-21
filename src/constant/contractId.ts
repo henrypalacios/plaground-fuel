@@ -1,0 +1,3 @@
+export const COUNTER_CONTRACT_ID = "0xf47a5136dd35fb8dc00f576e52fec6d26d3d8060a51a9ab5277bdb2cc4d22e6e"
+
+export const MULTISIG_CONTRACT_ID = "0xa6ce0991bc31db4b1ce725bbcc11ca72bfd205b3befb0f92b1c3eb79d8f66889"

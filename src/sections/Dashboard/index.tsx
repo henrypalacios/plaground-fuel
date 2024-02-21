@@ -1,38 +1,62 @@
-import { useNetworkConnection } from "@/context/useNetworkConnection";
-import { useGetContract } from "@/hooks/useGetContract";
 import { useCallback, useEffect, useState } from "react";
+import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
+import { useGetCounterContract } from "@/hooks/useGetCounterContract";
 
 
 export function Dashboard() {
-   const {contract} = useGetContract()
-   const {wallet} = useNetworkConnection()
+   const {contract} = useGetCounterContract()
+   const {wallet, accountConnected} = useNetworkConnection()
    const [counter, setCounter] = useState(0)
    
-   const getCount = useCallback(async() => {
-      if (contract) {
-        const { value } = await contract.functions.count().simulate();
-        setCounter(value.toNumber());
-      }
-    }, [contract])
+  const getCount = useCallback(async () => {
+    if (!contract) return
 
-   useEffect(() => {
-      if (!contract) return 
+    try{
+      const { value } = await contract.functions
+      .count()
+      .txParams({
+        gasPrice: 1,
+        gasLimit: 100_000,
+      })
+      .simulate();
+      setCounter(value.toNumber());
+    } catch(error) {
+      console.error(error);
+    }
+  }, [contract])
 
-      getCount()
-   }, [getCount, contract])
+  const onIncrementPressed = async () => {
+    if (!contract) {
+      return alert("Contract not loaded");
+    }
+    try {
+      await contract.functions
+      .increment()
+      .txParams({
+        gasPrice: 1,
+        gasLimit: 100_000,
+      })
+      .call();
+      await getCount();
+    } catch(error) {
+      console.error(error);
+    }
+  };
 
-    async function increment() {
-      if (contract) {
-        // Creates a transactions to call the increment function
-        // because it creates a TX and updates the contract state this requires the wallet to have enough coins to cover the costs and also to sign the Transaction
-        try {
-          await contract.functions.increment().txParams({ gasPrice: 1 }).call();
-          getCount();
-        } catch (err) {
-          console.log("error sending transaction...", err);
-        }
+
+  useEffect(() => {
+    if (!contract) return
+
+    async function getInitialCount(){
+      if(accountConnected && wallet){
+        await getCount();
+        // setContract(counterContract);
       }
     }
+    
+    getInitialCount();
+  }, [accountConnected, contract, getCount, wallet]);
+
 
    if (!contract || !wallet) return
    
@@ -40,7 +64,7 @@ export function Dashboard() {
 
             <>
               <h3>Counter: {counter}</h3>
-              <button onClick={increment}>
+              <button onClick={onIncrementPressed}>
                Increment
                </button>
             </>
