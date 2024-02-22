@@ -1,13 +1,13 @@
-import { useState } from "react";
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
 import { FlexBox } from "../common/FlexBox";
 import { NewMultisig } from "../NewMultisig";
 import { InteractionMultisig } from "../InteractionMultisig";
+import { useMultisigDeployed } from "@/hooks/useMultisigDeployed";
 
 
 export function Dashboard() {
    const {wallet} = useNetworkConnection()
-   const [contractDeployed, setContractDeployed] = useState<string | undefined>()
+   const [contractDeployed, setContractDeployed] = useMultisigDeployed();
    
    if (!wallet) return
 
@@ -16,7 +16,7 @@ export function Dashboard() {
       {!contractDeployed ? 
         (<NewMultisig setContract={setContractDeployed}/>)
       :
-        (<InteractionMultisig contractId={contractDeployed}/>)
+        (<InteractionMultisig clearContractId={() => setContractDeployed('')} contractId={contractDeployed}/>)
       }
     </FlexBox>
    ) 
