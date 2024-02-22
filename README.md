@@ -9,12 +9,20 @@ Our playground leverages a modern tech stack to ensure a smooth and efficient us
 - Fuels library to interact with the Fuel Blockchain.
 - **Vite** for an optimized development and build workflow.
 
-## 🚀 Getting Started
+## 🏃‍♂️ Getting Started
+
+### ⚠️ Prerequisites 
+Before you begin, ensure you have met the following requirements:
+
+- **Node.js**: Version >=18.18 <21. 
+> 🚨 This project might not work with older versions of Node.js. 🚨
+
+### 🚀 Launch
 Follow these steps to get the playground up and running on your local machine:
 
 - Clone the repository
 ```bash
-git clone https://github.com/henrypalacios/playground-fuel.git
+git clone https://github.com/henrypalacios/playground-multisig.git
 cd playground-fuel
 ```
 - Install dependencies
@@ -30,7 +38,7 @@ yarn dev
 This will open up a browser window with the playground. Start experimenting!
 
 ### 📚 Documentation
-For more detailed information about the Multisig Smart Contract and the Fuel Blockchain, visit the following resources:
+For more detailed information about the interaction with the Multisig Smart Contract on the Fuel Blockchain, visit the following resources:
 
 - [Fuel Documentation](https://docs.fuel.network/)
-- [Multisig Smart Contract Guide](https://wallet.fuel.network/docs/dev/getting-started/)
+- [Fuel Wallet Guide](https://wallet.fuel.network/docs/dev/getting-started/)
