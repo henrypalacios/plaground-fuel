@@ -20,7 +20,7 @@ export function InteractionMultisig({contractId}: Props) {
         contract.getBalance(BASE_ASSET_ID).then((value) => {
             const _balance = irregularToDecimalFormatted(value, {
                 significantFigures: 4,
-               ...assetsMap[BASE_ASSET_ID] 
+               assetInfo: assetsMap[BASE_ASSET_ID] 
             })
             setBalance(_balance)
         })
@@ -28,7 +28,7 @@ export function InteractionMultisig({contractId}: Props) {
 
     return (
     <FlexBox gap="tiny">
-        <BadgeWalletInfo isLoading={false} address={contractId} balanceData={balance} />
+        <BadgeWalletInfo isLoading={false} address={contractId} balanceData={balance} color="secondary"/>
       </FlexBox>
     )
 }
