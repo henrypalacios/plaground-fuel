@@ -21,6 +21,11 @@
       flex-direction: column;
     }
 
+    &--space-between {
+      justify-content: space-between;
+      width: 100%;
+    }
+
     &__pt {
       &--tiny {
         @include padding-top($tiny);
