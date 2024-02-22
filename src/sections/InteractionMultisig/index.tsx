@@ -32,7 +32,7 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
 
     return (
     <FlexBox gap="tiny" align="space-between">
-        <LoadingButton onClick={() => alert('🚧 Not Implemented!')}>
+        <LoadingButton onClick={() => alert('🚧 WIP!')}>
             Set up 👤
         </LoadingButton>
         <BadgeWalletInfo isLoading={isFetching} address={contractId} balanceData={balance} color="secondary">
