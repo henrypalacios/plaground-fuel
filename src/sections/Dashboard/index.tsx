@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
-import { useGetCounterContract } from "@/hooks/useGetCounterContract";
 import { FlexBox } from "../common/FlexBox";
-import LoadingButton from "../common/LoadingButton";
-import { useDeployMultisigContract } from "@/hooks/useMultisigContract";
-import { FuelMultisigAbi } from "@/services/contracts/multisig";
 import { NewMultisig } from "../NewMultisig";
 import { InteractionMultisig } from "../InteractionMultisig";
 

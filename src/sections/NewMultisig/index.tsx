@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection";
-import { useGetCounterContract } from "@/hooks/useGetCounterContract";
 import { useDeployMultisigContract } from "@/hooks/useMultisigContract";
 import { FlexBox } from "../common/FlexBox";
 import LoadingButton from "../common/LoadingButton";
