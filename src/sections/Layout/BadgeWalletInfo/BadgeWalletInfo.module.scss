@@ -10,12 +10,21 @@
     color: $color-blossom;
     padding: 0;
     
-    &--fill {
+    &--secondary {
+      border: solid 1px $color-fade;
+      color: $color-fade;
+    }
+    
+    &__fill {
       border: none;
       background-color: $color-blossom;
       height: 100%;
       color: $color-bg;
       padding-left: 0.5rem;
+      
+      &--secondary {
+        background-color: $color-fade;
+      }
     }
   
     &__inner {
@@ -35,7 +44,7 @@
     }
   
     .progress {
-      width: 1rem;
+      width: 5rem;
       border-radius: 50%;
       background-color: #FFFFFF;
     }
@@ -43,6 +52,11 @@
     .text {
       font-size: 1.5rem;
       padding-right: 1rem;
+      align-self: center;
+
+      &--secondary {
+        color: $color-fade;
+      }
     }
   }
   

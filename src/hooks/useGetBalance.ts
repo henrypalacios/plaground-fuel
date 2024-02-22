@@ -11,10 +11,11 @@ interface UseGetBalanceReturn {
     assetInfo: AssetInfo
     formatted: string | undefined
     isLoading: boolean
+    addressToRequest?: string | undefined
 }
     
 
-export function useGetBalance(props?: AssetInfo ): UseGetBalanceReturn  {
+export function useGetBalance(props?: AssetInfo): UseGetBalanceReturn  {
     const assetInfo = useMemo(() => 
         props?.assetId ? {...props} : assetsMap[BASE_ASSET_ID], [props])
     const {accountConnected, isLoading} = useNetworkConnection()
@@ -24,10 +25,12 @@ export function useGetBalance(props?: AssetInfo ): UseGetBalanceReturn  {
     useEffect(() => {
         if (!balance) return
 
-        setFormatted(irregularToDecimalFormatted(balance, {
+        const formatted = irregularToDecimalFormatted(balance, {
             significantFigures: 4,
             assetInfo
-        }))
+        })
+        console.log('__formated', formatted)
+        setFormatted(formatted)
     }, [assetInfo, balance])
 
     return {balance, assetInfo, formatted, isLoading: isLoading || isFetching}
