@@ -52,6 +52,7 @@
     .text {
       font-size: 1.5rem;
       padding-right: 1rem;
+      align-self: center;
 
       &--secondary {
         color: $color-fade;

@@ -1,0 +1,16 @@
+@import '/src/assets/styles/sakura.scss';
+
+.iconButton {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #ececec;
+    }
+  }
+  

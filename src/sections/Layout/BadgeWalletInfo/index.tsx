@@ -1,8 +1,10 @@
+import { PropsWithChildren } from 'react';
 import { classNames } from '@/utils/classNames';
 import styles from './BadgeWalletInfo.module.scss';
 import { getTruncatedAddress } from '@/utils/blockchain';
+import { FlexBox } from '@/sections/common/FlexBox';
 
-interface BadgeWalletInfoProps {
+interface BadgeWalletInfoProps extends PropsWithChildren {
   isLoading: boolean;
   balanceData?: string | undefined;
   address: string;
@@ -13,7 +15,8 @@ export const BadgeWalletInfo: React.FC<BadgeWalletInfoProps> = ({
   address,
   balanceData,
   isLoading,
-  color
+  color,
+  children
 }) => {
   const BadgeColorStyle = color ? styles['badgeOval--secondary'] : '' 
   const fillColorStyle = color ? styles['badgeOval__fill--secondary'] :'' 
@@ -33,7 +36,10 @@ export const BadgeWalletInfo: React.FC<BadgeWalletInfoProps> = ({
         </div>
       </div>
       <div className={`${styles["badgeOval__inner--highlighted"]}`}>
-        <span className={classNames(styles.text, textColorStyle)}>{getTruncatedAddress(address)}</span>
+        <FlexBox>
+          <span className={classNames(styles.text, textColorStyle)}>{getTruncatedAddress(address)}</span>
+          {children ? <span>{children}</span> : null}
+        </FlexBox>
       </div>
     </div>
   );
