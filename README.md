@@ -23,7 +23,7 @@ Follow these steps to get the playground up and running on your local machine:
 - Clone the repository
 ```bash
 git clone https://github.com/henrypalacios/playground-multisig.git
-cd playground-fuel
+cd playground-multisig
 ```
 - Install dependencies
 ```bash
