@@ -16,7 +16,12 @@ export function Dashboard() {
       {!contractDeployed ? 
         (<NewMultisig setContract={setContractDeployed}/>)
       :
-        (<InteractionMultisig clearContractId={() => setContractDeployed('')} contractId={contractDeployed}/>)
+        (
+          <InteractionMultisig 
+            clearContractId={() => setContractDeployed('')} 
+            contractId={contractDeployed}
+          />
+        )
       }
     </FlexBox>
    ) 

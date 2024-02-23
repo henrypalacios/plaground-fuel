@@ -9,9 +9,13 @@
 }
 
 
-
 .flexBox {
     display: flex;
+    
+    &--center {
+      justify-content: center;
+      align-items: center;
+    }
   
     &--row {
       flex-direction: row;
@@ -19,11 +23,18 @@
   
     &--column {
       flex-direction: column;
+      width: 100%;
     }
 
     &--space-between {
       justify-content: space-between;
       width: 100%;
+    }
+    
+    &--outline {
+      border: 1px solid $color-blossom;
+      min-height: 40rem;
+      border-radius: $radius-large;
     }
 
     &__pt {
