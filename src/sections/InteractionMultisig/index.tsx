@@ -67,7 +67,8 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
         </FlexBox>
         <FlexBox isLoading={isGettingThreshold} outline center direction="column">
             {threshold ? (
-                <SummaryMultisigLayout threshold={threshold} contract={contract} component={ViewSelected} />
+                <SummaryMultisigLayout threshold={threshold} contract={contract} 
+                    component={ViewSelected} fetchThreshold={fetchThreshold}/>
             ) : (
                 <SetupMultisigView contract={contract} onSuccess={fetchThreshold} />
             )

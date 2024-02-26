@@ -3,9 +3,11 @@ import { FuelMultisigAbi } from "@/services/contracts/multisig"
 import { toIdentityInput } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 import { FunctionInvocationResult } from "fuels"
+import { TransactionEvents } from "./types"
 
 interface Props {
     contract: FuelMultisigAbi | undefined
+    onSuccess?: (result: FunctionInvocationResult<void, void> | undefined) => void
 }
 
 interface UseCreateTransactionReturn {
@@ -13,7 +15,7 @@ interface UseCreateTransactionReturn {
     isLoading: boolean
 }
 
-export function useCreateTransaction({contract}: Props) : UseCreateTransactionReturn {
+export function useCreateTransaction({contract, onSuccess}: Props) : UseCreateTransactionReturn {
     const [isLoading, setIsLoading] = useState(false)
 
     const proposeTransaction = useCallback(async (to: string, amount: number) => {
@@ -31,13 +33,19 @@ export function useCreateTransaction({contract}: Props) : UseCreateTransactionRe
                 .propose_tx({to: _usersIdentity[0], data: amount})
                 .txParams({
                     gasPrice: cost.gasPrice,
-                    gasLimit: cost.gasUsed.mul(1.1),
+                    gasLimit: cost.gasUsed.mul(20),
                 })
                 .call()
             
+            document.dispatchEvent(
+                new CustomEvent(TransactionEvents.transactionProposed)
+            );
+              
+            onSuccess?.(result)
             return result
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
+            console.dir(e, {depth: null})
             const msg = getErrorMessage(e)
             let defaultMsg = "An error has ocurred while trying to propose new Transaction"
             
