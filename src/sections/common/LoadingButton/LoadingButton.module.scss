@@ -13,6 +13,15 @@
       &:hover {
         background-color: $color-blossom-hover;
       }
+      
+      &:disabled {
+        background-color: $color-text;
+        color: darkgray;
+        cursor: not-allowed;
+        &:hover {
+          background-color: $color-text;
+        }
+      }
     }
   
     &__button--danger {

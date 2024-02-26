@@ -13,8 +13,8 @@ function LoadingButton({ isLoading = false, children, onClick, variant = undefin
       <button
         className={classNames(styles[`walletConnect__button`], variant ? styles[`walletConnect__button--danger`]: '')}
         onClick={onClick}
-        {...props}
         disabled={isLoading}
+        {...props}
       >
         {isLoading ? (
           <div className={styles["spinner"]}></div>

@@ -29,7 +29,7 @@ export function useGetBalance(props?: AssetInfo): UseGetBalanceReturn  {
             significantFigures: 4,
             assetInfo
         })
-        console.log('__formated', formatted)
+
         setFormatted(formatted)
     }, [assetInfo, balance])
 

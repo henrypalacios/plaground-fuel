@@ -8,7 +8,7 @@ interface Props {
 
 
 export function NewMultisig({setContract}: Props) {
-   const {deployContract, error} = useDeployMultisigContract()
+   const {deployContract, error, isLoading} = useDeployMultisigContract()
    
    const _deployContract = () => {
     deployContract().then(setContract)
@@ -18,7 +18,7 @@ export function NewMultisig({setContract}: Props) {
    if (error) return <h3>{error}</h3>
 
    return (
-    <>
+    <FlexBox direction="column" gap="lg">
       <LoadingButton onClick={_deployContract}>
         <FlexBox gap="tiny">
           <span>
@@ -27,6 +27,10 @@ export function NewMultisig({setContract}: Props) {
           new account
         </FlexBox>
       </LoadingButton>
-    </>
+      <FlexBox isLoading={isLoading} outline center direction="column">
+        <p>You don't have an account registered.</p>
+      </FlexBox>
+
+    </FlexBox>
    ) 
 }

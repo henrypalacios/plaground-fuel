@@ -1,5 +1,6 @@
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection"
 import { FuelContractId, IContractAbiFactory } from "./types"
+import { useEffect, useState } from "react"
 
 type Contract<T> = T | undefined
 
@@ -14,11 +15,16 @@ interface UseGetContractReturn<T> {
 
 export function useGetContract<T>({contractId, contractAbiFactory}: Props<T>): UseGetContractReturn<T> {
    const { wallet } = useNetworkConnection() 
-   let contract: Contract<T>
+   const [contract, setContract] = useState<UseGetContractReturn<T>['contract']>(undefined);
    
-   if (wallet) {
-      contract = contractAbiFactory.connect(contractId, wallet) 
-   }
+   useEffect(() => {
+      if (wallet) {
+        const newContract = contractAbiFactory.connect(contractId, wallet);
+        setContract(newContract);
+      } else {
+        setContract(undefined);
+      }
+    }, [contractId, wallet, contractAbiFactory]);
    
    return { contract }
 }

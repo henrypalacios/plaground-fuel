@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { FuelMultisigAbi, FuelMultisigAbi__factory,  } from "@/services/contracts/multisig"
 import { useGetContract } from "../useGetContract"
 
@@ -7,8 +8,16 @@ interface Props {
 
 
 export function useGetMultisigContract({contractId}: Props) {
-   const { contract } = useGetContract<FuelMultisigAbi>({contractId, 
-      contractAbiFactory: FuelMultisigAbi__factory}) 
+   const contractRef = useRef<FuelMultisigAbi | undefined>(undefined);
    
-   return { contract }
+   const { contract } = useGetContract<FuelMultisigAbi>({
+      contractId, 
+      contractAbiFactory: FuelMultisigAbi__factory
+   });
+
+   if (!contractRef.current && contract) {
+      contractRef.current = contract;
+   }
+
+   return { contract: contractRef.current};
 }
