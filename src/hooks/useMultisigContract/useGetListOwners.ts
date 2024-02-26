@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
-import { identityInputToAddress, identityInputToString } from "@/services/contracts/transformers/toInputIdentity"
+import { identityInputToAddress } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 
 interface Props {
