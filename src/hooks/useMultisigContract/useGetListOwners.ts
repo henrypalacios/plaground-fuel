@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
-import { identityInputToString } from "@/services/contracts/transformers/toInputIdentity"
+import { identityInputToAddress, identityInputToString } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 
 interface Props {
@@ -31,7 +31,7 @@ export function useGetListOwners({contract}: Props): UseGetListOwnersReturn {
             .simulate();
     
           if (result.value !== undefined) {
-            setOwners(identityInputToString(result.value));
+            setOwners(identityInputToAddress(result.value));
           }
         } catch (e) {
           const msg = getErrorMessage(e);

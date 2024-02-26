@@ -39,11 +39,11 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
     
     const ViewSelected = useMemo(() => {
         if (view === 'transaction') {
-            return <NewTransaction />
+            return <NewTransaction contract={contract} />
         }
         
         return <OwnersTable owners={[]} /> 
-    }, [view])
+    }, [contract, view])
     
     return (
     <FlexBox direction="column" gap="lg">
