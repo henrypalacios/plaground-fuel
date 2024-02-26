@@ -57,7 +57,7 @@ export function useCreateTransaction({contract, onSuccess}: Props) : UseCreateTr
         } finally {
             setIsLoading(false)
         }
-    }, [contract])
+    }, [contract, onSuccess])
 
 
     return {proposeTransaction, isLoading}

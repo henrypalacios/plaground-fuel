@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode, useCallback } from 'react';
+import React, { createContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import {FuelWalletLocked} from "@fuel-wallet/sdk"
 import { useDisconnect, useIsConnected, useWallet, useAccount, useConnectUI } from '@fuel-wallet/react';
 
@@ -28,7 +28,15 @@ export const NetworkConnectionProvider: React.FC<NetworkConnectionProviderProps>
   const { isConnected } = useIsConnected();
   const {account} = useAccount()
   const { disconnect } = useDisconnect();
-  const { connect, isConnecting } = useConnectUI();
+  const { connect, isConnecting, isError: errorConnecting} = useConnectUI();
+  
+  useEffect(() => {
+    if (!errorConnecting) return
+    
+
+    setError('FAILED_TO_CONNECT')
+    alert('Error trying to connect the wallet, check that you have internet connection and at least one account created.')
+  }, [errorConnecting])
   
   const connectWallet = useCallback(async () => {
       try {
