@@ -1,8 +1,8 @@
+import { useCallback, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
 import { toIdentityInput } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 import { FunctionInvocationResult } from "fuels"
-import { useCallback, useState } from "react"
 
 interface Props {
     contract: FuelMultisigAbi | undefined

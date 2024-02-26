@@ -1,29 +1,28 @@
 import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
-import { identityInputToString } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 
 interface Props {
    contract: FuelMultisigAbi | undefined 
 }
 
-interface UseGetListOwnersReturn {
+interface UseActiveTransactionReturn {
    isLoading: boolean
-   owners: string[] | undefined
-   fetchOwners: () => void
+   transactions: number | undefined 
+   fetchTransactions: () => void
 }
 
-export function useGetListOwners({contract}: Props): UseGetListOwnersReturn {
+export function useActiveTransactions({contract}: Props): UseActiveTransactionReturn {
     const [isLoading, setIsLoading] = useState(true)
-    const [owners, setOwners] = useState<UseGetListOwnersReturn['owners']>()
+    const [transactions, setTransactions] = useState<UseActiveTransactionReturn['transactions']>()
     
-    const fetchOwners = useCallback(async () => {
+    const fetchTransactions = useCallback(async () => {
         if (!contract) return;
     
         setIsLoading(true);
         try {
           const result = await contract.functions
-            .get_owners()
+            .get_threshold()
             .txParams({
               gasPrice: 1,
               gasLimit: 100_000,
@@ -31,7 +30,7 @@ export function useGetListOwners({contract}: Props): UseGetListOwnersReturn {
             .simulate();
     
           if (result.value !== undefined) {
-            setOwners(identityInputToString(result.value));
+            setTransactions(result.value);
           }
         } catch (e) {
           const msg = getErrorMessage(e);
@@ -42,10 +41,10 @@ export function useGetListOwners({contract}: Props): UseGetListOwnersReturn {
       }, [contract]);
     
     useEffect(() => {
-        fetchOwners();
-    }, [fetchOwners])
+        fetchTransactions();
+    }, [fetchTransactions])
 
     
-    return {owners, isLoading, fetchOwners}
+    return {transactions, isLoading, fetchTransactions}
 
 }
