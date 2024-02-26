@@ -5,10 +5,19 @@
   }
   
   body {
-    padding: 0;
+    padding: 0;    
+    width: 100%;
   }
-  
+
+  main {
+    width: 70vw;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
   .header {
+    width: 70vw;
+    margin: 0 auto;
     height: var(--header-height);
     background-color: $color-bg;
   
