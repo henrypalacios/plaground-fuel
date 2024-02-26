@@ -8,7 +8,7 @@ interface FlexBoxProps {
   pl?: 'tiny' | 'sm' | 'lg' 
   gap?: 'tiny' | 'sm' | 'lg' 
   isLoading?: boolean
-  align?: 'space-between' | 'space-evenly'
+  align?: 'space-between' | 'space-evenly' | 'flex-start'
   outline?: boolean
   center?: boolean
 }

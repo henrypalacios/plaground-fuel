@@ -10,6 +10,7 @@ import IconButton from "../common/IconButton"
 import { useBalance } from "@fuel-wallet/react"
 import { SetupMultisigView, SetupMultisigViewType } from "./SetupMultisigView"
 import { useGetThreshold } from "@/hooks/useMultisigContract/useGetThreshold"
+import { SummaryMultisigLayout } from "./SummaryMultisig"
 
 interface Props {
     contractId: string
@@ -61,7 +62,9 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
         </FlexBox>
         <FlexBox isLoading={isGettingThreshold} outline center direction="column">
             {threshold ? (
-                <>Accounts</>
+                <SummaryMultisigLayout threshold={threshold} contract={contract} >
+                    <>New Tx</>    
+                </SummaryMultisigLayout> 
             ) : (
                 <SetupMultisigView view={view} contract={contract} onSuccess={fetchThreshold} />
             )
