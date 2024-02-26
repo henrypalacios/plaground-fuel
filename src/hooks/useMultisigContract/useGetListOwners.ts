@@ -7,7 +7,7 @@ interface Props {
    contract: FuelMultisigAbi | undefined 
 }
 
-interface UseGetListOwnersReturn {
+export interface UseGetListOwnersReturn {
    isLoading: boolean
    owners: string[] | undefined
    fetchOwners: () => void

@@ -8,9 +8,13 @@ import CopyButton from "../common/CopyButton"
 import LoadingButton from "../common/LoadingButton"
 import IconButton from "../common/IconButton"
 import { useBalance } from "@fuel-wallet/react"
-import { SetupMultisigView, SetupMultisigViewType } from "./SetupMultisigView"
+import { SetupMultisigView } from "./SetupMultisigView"
 import { useGetThreshold } from "@/hooks/useMultisigContract/useGetThreshold"
 import { SummaryMultisigLayout } from "./SummaryMultisig"
+import { OwnersTable } from "./OwnersTable"
+import { NewTransaction } from "./NewTransaction"
+
+export type InteractionViewType = 'default' | 'transaction'
 
 interface Props {
     contractId: string
@@ -22,20 +26,8 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
     const {contract} = useGetMultisigContract({contractId})
     const [balance, setBalance] = useState<string | undefined>()
     const {balance: _balance, isFetching} = useBalance({address: contractId}) 
-    const [view, setView] = useState<SetupMultisigViewType>('default')
+    const [view, setView] = useState<InteractionViewType>('default')
     const {threshold, isLoading: isGettingThreshold, fetchThreshold} = useGetThreshold({contract})
-    
-    const viewProps = useMemo(() => {
-        switch(view){
-            case 'setup':
-                return {actionTitle: 'Back', action: () => setView('default')}
-            
-            default:
-                return {actionTitle: 'Set up 👤', action: () => setView('setup')}
-    
-        }
-    }, [view])
-
     
     useEffect(() => {
         const _formatted = irregularToDecimalFormatted(_balance ?? undefined, {
@@ -45,12 +37,25 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
         setBalance(_formatted)
     }, [_balance])
     
+    const ViewSelected = useMemo(() => {
+        if (view === 'transaction') {
+            return <NewTransaction />
+        }
+        
+        return <OwnersTable owners={[]} /> 
+    }, [view])
+    
     return (
     <FlexBox direction="column" gap="lg">
         <FlexBox gap="tiny" align="space-between" >
-            <LoadingButton disabled={!threshold} isLoading={isGettingThreshold} onClick={viewProps.action}>
-                Edit multisig
-            </LoadingButton>
+            <FlexBox>
+                <LoadingButton disabled={!threshold} isLoading={isGettingThreshold} onClick={() => setView('default')}>
+                    👥 Owners
+                </LoadingButton>
+                <LoadingButton disabled={!threshold} isLoading={isGettingThreshold} onClick={() => setView('transaction')}>
+                    💸 Transaction
+                </LoadingButton>
+            </FlexBox>
             <BadgeWalletInfo isLoading={isFetching} address={contractId} balanceData={balance} color="secondary">
                 <FlexBox>
                     <CopyButton textToCopy={contractId} /> 
@@ -62,11 +67,9 @@ export function InteractionMultisig({contractId, clearContractId}: Props) {
         </FlexBox>
         <FlexBox isLoading={isGettingThreshold} outline center direction="column">
             {threshold ? (
-                <SummaryMultisigLayout threshold={threshold} contract={contract} >
-                    <>New Tx</>    
-                </SummaryMultisigLayout> 
+                <SummaryMultisigLayout threshold={threshold} contract={contract} component={ViewSelected} />
             ) : (
-                <SetupMultisigView view={view} contract={contract} onSuccess={fetchThreshold} />
+                <SetupMultisigView contract={contract} onSuccess={fetchThreshold} />
             )
             }
         </FlexBox>

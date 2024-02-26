@@ -1,21 +1,30 @@
-import { PropsWithChildren } from "react";
+import React from "react";
+import { ReactElement } from "react";
 import { FlexBox } from "../common/FlexBox";
-import { useGetListOwners } from "@/hooks/useMultisigContract/useGetListOwners";
+import { UseGetListOwnersReturn, useGetListOwners } from "@/hooks/useMultisigContract/useGetListOwners";
 import { FuelMultisigAbi } from "@/services/contracts/multisig";
 import { useActiveTransactions } from "@/hooks/useMultisigContract/useActiveTransactions";
+import { dashEmpty } from "@/utils/formatString";
+import { OwnerTableProps } from "./OwnersTable";
 
-interface Props extends PropsWithChildren {
+interface Props  {
     threshold: number
     contract: FuelMultisigAbi | undefined
+    component: ReactElement<OwnerTableProps>
 }
 
-function dashEmpty(value: number | string | undefined) {
-    if (value === undefined) return '-'
-    
-    return value
+type ChildProps = Pick<Props, 'component'> & {
+    owners: UseGetListOwnersReturn['owners']
 }
 
-export function SummaryMultisigLayout({children, contract, threshold}: Props) {
+export function ChildComponent({component, owners}: ChildProps) {
+    if (!owners) return null
+
+    return React.cloneElement(component, { owners });
+} 
+
+
+export function SummaryMultisigLayout({component, contract, threshold}: Props) {
     const {owners} = useGetListOwners({contract})
     const {transactions} = useActiveTransactions({contract})
 
@@ -28,7 +37,9 @@ export function SummaryMultisigLayout({children, contract, threshold}: Props) {
             <span>|</span>
             <span>Active Transactions: <b>{dashEmpty(transactions)}</b></span>
         </FlexBox>
-        {children}
+        <FlexBox pt="lg">
+            <ChildComponent owners={owners} component={component} />
+        </FlexBox>
     </FlexBox>
     )
 }

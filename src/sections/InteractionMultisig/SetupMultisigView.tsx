@@ -6,10 +6,8 @@ import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetwo
 import { useEffect, useState } from "react"
 import { useSetupMultisig } from "@/hooks/useMultisigContract/useSetupMultisig"
 
-export type SetupMultisigViewType = 'default' | 'setup'
 
 interface Props {
-    view: SetupMultisigViewType    
     contract: FuelMultisigAbi | undefined
     onSuccess: () => void
 }
@@ -33,7 +31,7 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
         const result = await setupMultisig(threshold, [signer])
         
         if (result?.transactionId) {
-            console.log('__result', result)
+            console.info('__result', result)
             setTxId(result.transactionId)
         }
     }
