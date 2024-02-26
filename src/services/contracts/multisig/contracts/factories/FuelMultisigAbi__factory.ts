@@ -101,6 +101,16 @@ const _abi = {
           "name": "Unauthorized",
           "type": 0,
           "typeArguments": null
+        },
+        {
+          "name": "NotInitialized",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
+          "name": "AlreadyInitialized",
+          "type": 0,
+          "typeArguments": null
         }
       ],
       "typeParameters": null
@@ -867,6 +877,78 @@ const _abi = {
     },
     {
       "logId": 20,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 21,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 22,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 23,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 24,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 25,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 26,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 27,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 28,
+      "loggedType": {
+        "name": "",
+        "type": 3,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 29,
       "loggedType": {
         "name": "",
         "type": 3,
