@@ -45,6 +45,8 @@ export function useSetupMultisig({contract}: Props) : UseSetupMultisigReturn {
             }             
 
             console.error(defaultMsg, msg)
+        } finally {
+            setIsLoading(false)
         }
     }, [contract])
 
