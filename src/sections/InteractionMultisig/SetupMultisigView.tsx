@@ -19,18 +19,21 @@ const DEFAULT_THRESHOLD = 1
 export function SetupMultisigView({contract, onSuccess}: Props) {
     const {wallet} = useNetworkConnection()
     const [txId, setTxId] = useState<string | undefined>()
-    const {setupMultisig} = useSetupMultisig({contract})
+    const {setupMultisig, isLoading} = useSetupMultisig({contract})
     const [signer, setSigner] = useState<string>(wallet?.address.toB256() || '')
     const [threshold, setThreshold] = useState<number>(DEFAULT_THRESHOLD)
     
     useEffect(() => {
-        if (txId) onSuccess
+        if (!txId) return
+
+        onSuccess()
     }, [onSuccess, txId])
     
     const _setupMultisig = async () => {
         const result = await setupMultisig(threshold, [signer])
         
         if (result?.transactionId) {
+            console.log('__result', result)
             setTxId(result.transactionId)
         }
     }
@@ -42,7 +45,7 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
     return (
         <FlexBox direction="column" align="space-evenly">
             <FlexBox pl="lg" direction="column">
-                <p>Account is unowned and needs to be configured</p>
+                <p>Account must be configured</p>
             </FlexBox>
 
             <FlexBox center direction="column">
@@ -59,7 +62,7 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
                     onChange={() => setThreshold}
                 />
                 <FlexBox>
-                    <LoadingButton onClick={_setupMultisig}>Set up 👤</LoadingButton>
+                    <LoadingButton isLoading={isLoading} onClick={_setupMultisig}>Set up 👤</LoadingButton>
                 </FlexBox>
             </FlexBox>
         </FlexBox>
