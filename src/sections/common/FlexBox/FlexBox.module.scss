@@ -4,6 +4,10 @@
   padding-top: $index; 
 }
 
+@mixin padding-left($index) {
+  padding-left: $index; 
+}
+
 @mixin gap($index) {
   gap: $index; 
 }
@@ -30,6 +34,11 @@
       justify-content: space-between;
       width: 100%;
     }
+
+    &--space-evenly {
+      justify-content: space-evenly;
+      height: 100%;
+    }
     
     &--outline {
       border: 1px solid $color-blossom;
@@ -50,6 +59,20 @@
         @include padding-top($lg);
       }
     }
+
+    &__pl {
+      &--tiny {
+        @include padding-left($tiny);
+      }
+  
+      &--sm {
+        @include padding-left($sm);
+      }
+
+      &--lg {
+        @include padding-left($lg);
+      }
+    }
     
     &__gap {
       &--tiny {
@@ -68,9 +91,9 @@
   }
   
   .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
+    border: $font-size-base solid rgba(0, 0, 0, 0.1);
     border-left-color: #000;
-    border-radius: 1rem;
+    border-radius: $font-size-base;
     animation: spin 1s linear infinite;
   }
   
