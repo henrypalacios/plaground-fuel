@@ -5,6 +5,8 @@ import LoadingButton from "../common/LoadingButton"
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection"
 import { useEffect, useState } from "react"
 import { useSetupMultisig } from "@/hooks/useMultisigContract/useSetupMultisig"
+import { toNumber } from "fuels"
+import { isValidAddress } from "@/validations/blockchain"
 
 
 interface Props {
@@ -18,7 +20,7 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
     const {wallet} = useNetworkConnection()
     const [txId, setTxId] = useState<string | undefined>()
     const {setupMultisig, isLoading} = useSetupMultisig({contract})
-    const [signer, setSigner] = useState<string>(wallet?.address.toB256() || '')
+    const [signer, setSigner] = useState<string>(wallet?.address.toAddress() || '')
     const [threshold, setThreshold] = useState<number>(DEFAULT_THRESHOLD)
     
     useEffect(() => {
@@ -28,6 +30,11 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
     }, [onSuccess, txId])
     
     const _setupMultisig = async () => {
+        const error = isValidAddress(signer)
+        if (error) {
+            alert(error)
+            return
+        }
         const result = await setupMultisig(threshold, [signer])
         
         if (result?.transactionId) {
@@ -43,7 +50,7 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
     return (
         <FlexBox direction="column" align="space-evenly">
             <FlexBox pl="lg" direction="column">
-                <p>Account must be configured</p>
+                <p>🚨 Account must be configured... 🚨</p>
             </FlexBox>
 
             <FlexBox center direction="column">
@@ -51,13 +58,13 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
                     label={"Signer"} 
                     name='signer'
                     value={signer} 
-                    onChange={() => setSigner}
+                    onChange={(e) => setSigner(e.target.value)}
                 />
                 <InputTextField label={"Threshold"} 
                     name="threshold"
                     value={threshold} 
                     type="number"
-                    onChange={() => setThreshold}
+                    onChange={(e) => setThreshold(toNumber(e.target.value))}
                 />
                 <FlexBox>
                     <LoadingButton isLoading={isLoading} onClick={_setupMultisig}>Set up 👤</LoadingButton>

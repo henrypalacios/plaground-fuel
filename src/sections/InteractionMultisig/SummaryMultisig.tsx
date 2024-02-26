@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactElement } from "react";
 import { FlexBox } from "../common/FlexBox";
 import { UseGetListOwnersReturn, useGetListOwners } from "@/hooks/useMultisigContract/useGetListOwners";
@@ -6,11 +6,13 @@ import { FuelMultisigAbi } from "@/services/contracts/multisig";
 import { useActiveTransactions } from "@/hooks/useMultisigContract/useActiveTransactions";
 import { dashEmpty } from "@/utils/formatString";
 import { OwnerTableProps } from "./OwnersTable";
+import { TransactionEvents } from "@/hooks/useMultisigContract/types";
 
 interface Props  {
     threshold: number
     contract: FuelMultisigAbi | undefined
     component: ReactElement<OwnerTableProps>
+    fetchThreshold: () => void
 }
 
 type ChildProps = Pick<Props, 'component'> & {
@@ -24,9 +26,23 @@ export function ChildComponent({component, owners}: ChildProps) {
 } 
 
 
-export function SummaryMultisigLayout({component, contract, threshold}: Props) {
+export function SummaryMultisigLayout({component, contract, threshold, fetchThreshold}: Props) {
     const {owners} = useGetListOwners({contract})
-    const {transactions} = useActiveTransactions({contract})
+    const {transactions, fetchTransactions} = useActiveTransactions({contract})
+
+    useEffect(() => {
+        document.addEventListener(TransactionEvents.transactionProposed, () => {
+          fetchThreshold();
+          fetchTransactions()
+        });
+    
+        return () => {
+          document.removeEventListener(TransactionEvents.transactionProposed, () => {
+            fetchThreshold();
+            fetchTransactions()
+          });
+        };
+      }, [fetchThreshold, fetchTransactions]);
 
     return (
     <FlexBox direction="column" align="flex-start" center>

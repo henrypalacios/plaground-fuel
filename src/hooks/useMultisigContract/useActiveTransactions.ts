@@ -22,7 +22,7 @@ export function useActiveTransactions({contract}: Props): UseActiveTransactionRe
         setIsLoading(true);
         try {
           const result = await contract.functions
-            .get_threshold()
+            .get_active_tx_ids()
             .txParams({
               gasPrice: 1,
               gasLimit: 100_000,
@@ -30,7 +30,7 @@ export function useActiveTransactions({contract}: Props): UseActiveTransactionRe
             .simulate();
     
           if (result.value !== undefined) {
-            setTransactions(result.value);
+            setTransactions(result.value.length);
           }
         } catch (e) {
           const msg = getErrorMessage(e);
