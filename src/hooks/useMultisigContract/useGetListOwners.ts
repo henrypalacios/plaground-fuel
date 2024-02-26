@@ -1,28 +1,29 @@
 import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
+import { identityInputToString } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 
 interface Props {
    contract: FuelMultisigAbi | undefined 
 }
 
-interface UseGetThresholdReturn {
+export interface UseGetListOwnersReturn {
    isLoading: boolean
-   threshold: number | undefined 
-   fetchThreshold: () => void
+   owners: string[] | undefined
+   fetchOwners: () => void
 }
 
-export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
+export function useGetListOwners({contract}: Props): UseGetListOwnersReturn {
     const [isLoading, setIsLoading] = useState(true)
-    const [threshold, setThreshold] = useState<UseGetThresholdReturn['threshold']>()
+    const [owners, setOwners] = useState<UseGetListOwnersReturn['owners']>()
     
-    const fetchThreshold = useCallback(async () => {
+    const fetchOwners = useCallback(async () => {
         if (!contract) return;
     
         setIsLoading(true);
         try {
           const result = await contract.functions
-            .get_threshold()
+            .get_owners()
             .txParams({
               gasPrice: 1,
               gasLimit: 100_000,
@@ -30,7 +31,7 @@ export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
             .simulate();
     
           if (result.value !== undefined) {
-            setThreshold(result.value);
+            setOwners(identityInputToString(result.value));
           }
         } catch (e) {
           const msg = getErrorMessage(e);
@@ -41,10 +42,10 @@ export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
       }, [contract]);
     
     useEffect(() => {
-        fetchThreshold();
-    }, [fetchThreshold])
+        fetchOwners();
+    }, [fetchOwners])
 
     
-    return {threshold, isLoading, fetchThreshold}
+    return {owners, isLoading, fetchOwners}
 
 }

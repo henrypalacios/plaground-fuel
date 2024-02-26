@@ -6,17 +6,17 @@ interface Props {
    contract: FuelMultisigAbi | undefined 
 }
 
-interface UseGetThresholdReturn {
+interface UseActiveTransactionReturn {
    isLoading: boolean
-   threshold: number | undefined 
-   fetchThreshold: () => void
+   transactions: number | undefined 
+   fetchTransactions: () => void
 }
 
-export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
+export function useActiveTransactions({contract}: Props): UseActiveTransactionReturn {
     const [isLoading, setIsLoading] = useState(true)
-    const [threshold, setThreshold] = useState<UseGetThresholdReturn['threshold']>()
+    const [transactions, setTransactions] = useState<UseActiveTransactionReturn['transactions']>()
     
-    const fetchThreshold = useCallback(async () => {
+    const fetchTransactions = useCallback(async () => {
         if (!contract) return;
     
         setIsLoading(true);
@@ -30,7 +30,7 @@ export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
             .simulate();
     
           if (result.value !== undefined) {
-            setThreshold(result.value);
+            setTransactions(result.value);
           }
         } catch (e) {
           const msg = getErrorMessage(e);
@@ -41,10 +41,10 @@ export function useGetThreshold({contract}: Props): UseGetThresholdReturn {
       }, [contract]);
     
     useEffect(() => {
-        fetchThreshold();
-    }, [fetchThreshold])
+        fetchTransactions();
+    }, [fetchTransactions])
 
     
-    return {threshold, isLoading, fetchThreshold}
+    return {transactions, isLoading, fetchTransactions}
 
 }

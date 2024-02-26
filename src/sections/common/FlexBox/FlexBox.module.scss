@@ -37,6 +37,11 @@
 
     &--space-evenly {
       justify-content: space-evenly;
+      width: 100%;
+    }
+
+    &--flex-start {
+      justify-content: flex-start;
       height: 100%;
     }
     
