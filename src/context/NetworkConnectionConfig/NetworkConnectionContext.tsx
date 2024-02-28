@@ -26,9 +26,9 @@ export const NetworkConnectionProvider: React.FC<NetworkConnectionProviderProps>
   const [accounts, setAccounts] = useState<NetworkConnectionContextType['accounts']>([]);
   const { wallet, isLoading } = useWallet();
   const { isConnected } = useIsConnected();
-  const {account} = useAccount()
+  const { account } = useAccount()
   const { disconnect } = useDisconnect();
-  const { connect, isConnecting, isError: errorConnecting} = useConnectUI();
+  const { connect, isConnecting, isError: errorConnecting } = useConnectUI();
   
   useEffect(() => {
     if (!errorConnecting) return

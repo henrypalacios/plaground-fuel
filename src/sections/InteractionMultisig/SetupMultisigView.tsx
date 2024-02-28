@@ -38,7 +38,6 @@ export function SetupMultisigView({contract, onSuccess}: Props) {
         const result = await setupMultisig(threshold, [signer])
         
         if (result?.transactionId) {
-            console.info('__result', result)
             setTxId(result.transactionId)
         }
     }

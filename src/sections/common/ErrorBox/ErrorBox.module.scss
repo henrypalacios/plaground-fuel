@@ -1,0 +1,28 @@
+.box {
+    border-radius: 4px;
+    position: relative; 
+    margin-bottom: 5rem;
+    padding: 1rem;
+
+    &--error {
+      color: red;
+      border: 1px solid red;
+    }
+    
+    &--warning {
+      color: orange;
+      border: 1px solid orange;
+    }
+  
+    p {
+      margin: 0;
+    }
+  }
+  
+
+  
+  .retryButton {
+    // background-color: blue;
+    color: white;
+  }
+  

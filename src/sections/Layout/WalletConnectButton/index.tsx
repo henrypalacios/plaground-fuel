@@ -9,11 +9,9 @@ export const WalletConnectButton = () => {
   const { wallet, connectWallet, isLoading, accountConnected, disconnectWallet } = useNetworkConnection();
   const {formatted, isLoading: isLoadingBalance} = useGetBalance()
 
-  const buttonProps = wallet ? { variant:`danger`, onClick:() => disconnectWallet() }:
-            {onClick: () => {
-                connectWallet()
-            }
-          }      
+  const buttonProps = wallet ? 
+    { variant:`danger`, onClick:() => disconnectWallet() }:
+    { onClick: () => connectWallet() }      
 
 
   return (

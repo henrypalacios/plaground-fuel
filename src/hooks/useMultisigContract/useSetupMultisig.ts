@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
 import { toIdentityInput } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 import { FunctionInvocationResult } from "fuels"
+import { useInteractionError } from "@/context/InteractionErrorContext/useInteractionError"
 
 interface Props {
     contract: FuelMultisigAbi | undefined
@@ -14,11 +15,14 @@ interface UseSetupMultisigReturn {
 }
 
 export function useSetupMultisig({contract}: Props) : UseSetupMultisigReturn {
+    const [error, setError] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState(false)
+    const {setError: setGlobalError} = useInteractionError()
 
     const setupMultisig = useCallback(async (threshold: number, users: string[]) => {
         if (!contract) return
 
+        setError(undefined)
         setIsLoading(true)
         const _usersIdentity = toIdentityInput(users)
         try {
@@ -45,10 +49,17 @@ export function useSetupMultisig({contract}: Props) : UseSetupMultisigReturn {
             }             
 
             console.error(defaultMsg, msg)
+            setError(`${msg}: ${defaultMsg}`)
         } finally {
             setIsLoading(false)
         }
     }, [contract])
+
+    useEffect(() => {
+        setGlobalError(error ? {msg: error} : null) 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error])
 
 
     return {setupMultisig, isLoading}
