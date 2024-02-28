@@ -10,9 +10,8 @@ export const WalletConnectButton = () => {
   const {formatted, isLoading: isLoadingBalance} = useGetBalance()
 
   const buttonProps = wallet ? 
-    { variant:`danger`, onClick:() => disconnectWallet() }:
+    { variant:`danger`, onClick:() => disconnectWallet() } :
     { onClick: () => connectWallet() }      
-
 
   return (
       <FlexBox>

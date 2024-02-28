@@ -63,6 +63,7 @@ export function useCreateTransaction({contract, onSuccess}: Props) : UseCreateTr
         }
     }, [contract, onSuccess])
 
+
     useEffect(() => {
         setGlobalError(error ? {msg: error} : null) 
 
