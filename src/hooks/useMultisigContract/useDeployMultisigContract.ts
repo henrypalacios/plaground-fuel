@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi__factory  } from "@/services/contracts/multisig"
 import bytecode  from "@/services/contracts/multisig/contracts/FuelMultisigAbi.hex"
 import { useNetworkConnection } from "@/context/NetworkConnectionConfig/useNetworkConnection"
 import { getErrorMessage } from "@/utils/error"
+import { useInteractionError } from "@/context/InteractionErrorContext/useInteractionError"
 
 interface UseDeployMultisigContractReturn {
     deployContract: () => Promise<string | undefined>
@@ -14,6 +15,7 @@ export function useDeployMultisigContract(): UseDeployMultisigContractReturn {
     const {wallet} = useNetworkConnection()
     const [error, setError] = useState<string | undefined>()
     const [isLoading, setLoading] = useState(false)
+    const {setError: setGlobalError} = useInteractionError()
     
     const deployContract = useCallback(async () => {
         setError(undefined)
@@ -39,6 +41,13 @@ export function useDeployMultisigContract(): UseDeployMultisigContractReturn {
 
         
     }, [wallet])
+
+    useEffect(() => {
+        setGlobalError(error ? {msg: error, onRetry: deployContract} : null) 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error])
+    
 
     return {deployContract, error, isLoading} 
 }

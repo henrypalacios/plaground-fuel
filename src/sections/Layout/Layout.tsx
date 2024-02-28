@@ -2,10 +2,11 @@ import { ErrorBoundary } from "../ErrorBoundary";
 import styles from "./Layout.module.scss";
 import { PropsWithChildren } from "react";
 import { WalletConnectButton } from "./WalletConnectButton";
+import { InteractionErrorProvider } from "@/context/InteractionErrorContext";
 
 export function Layout({children}: PropsWithChildren) {
 	return (
-		<>
+		<InteractionErrorProvider>
 			<header className={styles.header}>
 				<section className={styles.header__container}>
 					<div className={styles.brand__container}>
@@ -24,6 +25,6 @@ export function Layout({children}: PropsWithChildren) {
                     {children}
                 </main>
 			</ErrorBoundary >
-		</>
+		</InteractionErrorProvider>
 	);
 }

@@ -8,14 +8,11 @@ interface Props {
 
 
 export function NewMultisig({setContract}: Props) {
-   const {deployContract, error, isLoading} = useDeployMultisigContract()
+   const {deployContract, isLoading} = useDeployMultisigContract()
    
    const _deployContract = () => {
     deployContract().then(setContract)
    }
-   
-
-   if (error) return <h3>{error}</h3>
 
    return (
     <FlexBox direction="column" gap="lg">

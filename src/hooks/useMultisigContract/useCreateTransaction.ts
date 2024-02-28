@@ -1,9 +1,10 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { FuelMultisigAbi } from "@/services/contracts/multisig"
 import { toIdentityInput } from "@/services/contracts/transformers/toInputIdentity"
 import { getErrorMessage } from "@/utils/error"
 import { FunctionInvocationResult } from "fuels"
 import { TransactionEvents } from "./types"
+import { useInteractionError } from "@/context/InteractionErrorContext/useInteractionError"
 
 interface Props {
     contract: FuelMultisigAbi | undefined
@@ -16,7 +17,9 @@ interface UseCreateTransactionReturn {
 }
 
 export function useCreateTransaction({contract, onSuccess}: Props) : UseCreateTransactionReturn {
+    const [error, setError] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState(false)
+    const {setError: setGlobalError} = useInteractionError()
 
     const proposeTransaction = useCallback(async (to: string, amount: number) => {
         if (!contract) return
@@ -54,10 +57,18 @@ export function useCreateTransaction({contract, onSuccess}: Props) : UseCreateTr
             }             
 
             console.error(defaultMsg, msg)
+            setError(`${msg}: ${defaultMsg}`)
         } finally {
             setIsLoading(false)
         }
     }, [contract, onSuccess])
+
+
+    useEffect(() => {
+        setGlobalError(error ? {msg: error} : null) 
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error])
 
 
     return {proposeTransaction, isLoading}

@@ -14,8 +14,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { hasError
 		console.error("Uncaught error:", error, errorInfo);
 	}
 
-	private resetError() {
+	private resetError = () => {
 		this.setState({ hasError: false });
+		window.location.reload();
 	}
 
 	render() {
