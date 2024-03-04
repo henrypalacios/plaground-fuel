@@ -46,6 +46,7 @@ export function NewTransaction({contract}: Props) {
                 value={amount} 
                 type="number"
                 onChange={(e) => setAmount(toNumber(e.target.value))}
+                helperText="🚨 This transaction is mocked in the contract and will not interact with another contract or transfer funds."
             />
             <FlexBox>
                 <LoadingButton isLoading={isLoading} onClick={_proposeTransaction}>Send 📝</LoadingButton>
