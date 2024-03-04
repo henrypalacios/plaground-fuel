@@ -1,16 +1,31 @@
 @import '/src/assets/styles/sakura.scss';
 
 .inputTextField {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
     margin-bottom: 1rem;
-  
+    width: 100%;
+
     label {
-        row-gap: 5rem;
+        display: contents;
+        
+        span {
+            justify-self: end;
+            margin-right: 1rem;
+        }
     }
   
     input {
-        margin-left: 1rem;
+        width: 100%;
+        grid-column: 2 / 3;
     }
-  }
+    
+    &__helper {
+        grid-column: 2 ;
+        font-size: $sm;
+        color: $color-text;
+        margin-top: 4px;
+    }
+}
   
